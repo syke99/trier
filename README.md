@@ -73,6 +73,8 @@ func main() {
 }
 ```
 
+More examples (such as anonymous functions, `*.TryJoin()`, etc) can be found [here](https://github.com/syke99/trier/blob/main/trier_test.go)
+
 Who?
 ====
 
