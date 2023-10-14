@@ -3,7 +3,7 @@
 [![go reportcard](https://goreportcard.com/badge/github.com/syke99/trier)](https://goreportcard.com/report/github.com/syke99/trier)
 [![License](https://img.shields.io/github/license/syke99/trier)](https://github.com/syke99/trier/blob/master/LICENSE)
 ![Go version](https://img.shields.io/github/go-mod/go-version/syke99/trier)</br>
-a heavily Zig-inspired approach to error handling
+a heavily Zig-inspired approach to error handling in Go
 
 Why use `trier`?
 ===
@@ -70,6 +70,55 @@ func main() {
     
     // prints "failed passOrFail
     println(tr.Err().Error())
+}
+```
+
+### More Advanced Usage
+
+```go
+package main
+
+import (
+	"database/sql"
+    "errors"
+	"fmt"
+
+
+	"github.com/syke99/trier"
+	_ "github.com/go-sql-driver/mysql"
+)
+
+func dsn(dbName string) string {
+	return fmt.Sprintf("%s:%s@tcp(%s)/%s", username, password, hostname, dbName)
+}
+
+func main() {
+    // create a new trier by calling trier.NewTrier()
+    tr := trier.NewTrier()
+
+	var err error
+	
+	var db *sql.DB
+	
+	var tx *sql.Tx
+	
+	tr.Try(func(args ...any) error {
+		db, err = sql.Open("mysql", dsn(""))
+		return err
+	}).Try(func(args ...any) error {
+        tx, err = db.Begin()
+		return err
+	}).Try(func(args ...any) error {
+        _, err = tx.Exec("UPDATE customers SET name = \"Jane Doe\" WHERE ID = 1")
+		return err
+	})
+	
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+    }
+	
+	tx.Commit()
 }
 ```
 
