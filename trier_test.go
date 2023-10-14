@@ -148,3 +148,19 @@ func TestTrierTryJoinNoErrors(t *testing.T) {
 	// Assert
 	assert.Nil(t, tr.Err())
 }
+
+func TestTrierAnonymousFunc(t *testing.T) {
+	// Arrange
+	tr := NewTrier()
+
+	x := ""
+
+	// Act
+	tr.Try(func(args ...any) error {
+		x = "hello"
+		return nil
+	})
+
+	// Assert
+	assert.Equal(t, "hello", x)
+}
