@@ -153,7 +153,7 @@ func TestTrierAnonymousFunc(t *testing.T) {
 	// Arrange
 	tr := NewTrier()
 
-	x := ""
+	x := "" // Triers + anonymous funcs make retrieving/setting return values trivial
 
 	// Act
 	tr.Try(func(args ...any) error {
