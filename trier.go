@@ -5,9 +5,7 @@ import (
 )
 
 func NewTrier() *Trier {
-	err := errors.New("")
-
-	return &Trier{err: &err}
+	return &Trier{}
 }
 
 // Trier internally keeps track of errors
@@ -27,16 +25,18 @@ type Trier struct {
 // may exist, and you want to collect multiple
 // errors, use TryWrap() instead
 func (t *Trier) Try(fn func(args ...any) error, args ...any) *Trier {
-	x := *t.err
-
-	if x.Error() != "" {
+	if t.err != nil {
 		return t
 	}
 
 	err := fn(args...)
 
 	if err != nil {
-		*t.err = err
+		if t.err == nil {
+			t.err = &err
+		} else {
+			*t.err = err
+		}
 	}
 
 	return t
@@ -50,12 +50,11 @@ func (t *Trier) Try(fn func(args ...any) error, args ...any) *Trier {
 func (t *Trier) TryJoin(fn func(args ...any) error, args ...any) *Trier {
 	err := fn(args...)
 
-	x := *t.err
-
-	if x != nil {
-		*t.err = errors.Join(err, x)
+	if t.err != nil {
+		x := errors.Join(*t.err, err)
+		t.err = &x
 	} else {
-		*t.err = err
+		t.err = &err
 	}
 
 	return t

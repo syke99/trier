@@ -39,8 +39,7 @@ func TestTrierTry(t *testing.T) {
 	tr.Try(passOrFail)
 
 	// Assert
-	x := *tr.err
-	assert.Equal(t, "", x.Error())
+	assert.Nil(t, tr.err)
 }
 
 func TestTrierTryError(t *testing.T) {
@@ -122,4 +121,30 @@ func TestTrierErrJoined(t *testing.T) {
 
 	// Assert
 	assert.Equal(t, "failedIfString\nfailed passOrFail", tr.Err().Error())
+}
+
+func TestTrierTryJoinNoPreviousError(t *testing.T) {
+	// Arrange
+	tr := NewTrier()
+
+	// Act
+	tr.Try(passOrFail).
+		Try(failIfString, 0).
+		TryJoin(failIfString, "hi")
+
+	// Assert
+	assert.Equal(t, "failedIfString", tr.Err().Error())
+}
+
+func TestTrierTryJoinNoErrors(t *testing.T) {
+	// Arrange
+	tr := NewTrier()
+
+	// Act
+	tr.Try(passOrFail).
+		Try(failIfString, 0).
+		TryJoin(failIfString, true)
+
+	// Assert
+	assert.Nil(t, tr.Err())
 }
