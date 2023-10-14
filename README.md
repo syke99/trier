@@ -114,7 +114,9 @@ func main() {
 	})
 	
 	if err != nil {
-		tx.Rollback()
+		if tx != nil {
+			tx.Rollback()
+        }
 		panic(err)
     }
 	
