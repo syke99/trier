@@ -21,6 +21,14 @@ go get github.com/syke99/trier
 ### Basic Usage
 
 ```go
+package main
+
+import (
+    "errors"
+
+    "github.com/syke99/trier"
+)
+
 // create the functions you want to be
 // tried (they can also just be passed 
 // as anonymous functions)
@@ -43,7 +51,7 @@ func failIfString(args ...any) error {
 
 func main() {
     // create a new trier by calling trier.NewTrier()
-    tr := NewTrier()
+    tr := trier.NewTrier()
     
     // try your functions by 
     // chaining them in tr.Try() calls
