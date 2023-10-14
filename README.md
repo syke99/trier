@@ -80,7 +80,7 @@ package main
 
 import (
 	"database/sql"
-    "errors"
+        "errors"
 	"fmt"
 
 
@@ -116,9 +116,9 @@ func main() {
 	if err != nil {
 		if tx != nil {
 			tx.Rollback()
-        }
+                }
 		panic(err)
-    }
+        }
 	
 	tx.Commit()
 }
