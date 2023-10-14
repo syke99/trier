@@ -1,6 +1,6 @@
 module github.com/syke99/trier
 
-go 1.21.1
+go 1.20
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
