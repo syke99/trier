@@ -93,8 +93,8 @@ func dsn(dbName string) string {
 }
 
 func main() {
-    // create a new trier by calling trier.NewTrier()
-    tr := trier.NewTrier()
+        // create a new trier by calling trier.NewTrier()
+        tr := trier.NewTrier()
 
 	var err error
 	
@@ -106,10 +106,10 @@ func main() {
 		db, err = sql.Open("mysql", dsn(""))
 		return err
 	}).Try(func(args ...any) error {
-        tx, err = db.Begin()
+                tx, err = db.Begin()
 		return err
 	}).Try(func(args ...any) error {
-        _, err = tx.Exec("UPDATE customers SET name = \"Jane Doe\" WHERE ID = 1")
+                _, err = tx.Exec("UPDATE customers SET name = \"Jane Doe\" WHERE ID = 1")
 		return err
 	})
 	
