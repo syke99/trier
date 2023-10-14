@@ -2,7 +2,6 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/syke99/trier.svg)](https://pkg.go.dev/github.com/syke99/trier)
 [![go reportcard](https://goreportcard.com/badge/github.com/syke99/trier)](https://goreportcard.com/report/github.com/syke99/trier)
 [![License](https://img.shields.io/github/license/syke99/trier)](https://github.com/syke99/trier/blob/master/LICENSE)
-![Go version](https://img.shields.io/github/go-mod/go-version/syke99/trier)</br>
 a heavily Zig-inspired approach to error handling
 
 Why use `trier`?
