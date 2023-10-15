@@ -60,6 +60,27 @@ func (t *Trier) TryJoin(fn func(args ...any) error, args ...any) *Trier {
 	return t
 }
 
+// IfErr calls fn if the error stored in the Trier
+// is not nil. This makes wrapping errors with custom
+// errors a breeze
+func (t *Trier) IfErr(fn func(err error) error) *Trier {
+	if t.err != nil {
+		err := fn(*t.err)
+		t.err = &err
+	}
+	return t
+}
+
+// Nil allows you to nil out an error. This way a
+// single trier can be used across a codebase as
+// long as you know when you are nilling out errors
+func (t *Trier) Nil() *Trier {
+	if t.err != nil {
+		t.err = nil
+	}
+	return t
+}
+
 // Err returns the first error experienced,
 // or any wrapped errors
 func (t *Trier) Err() error {
